@@ -5,7 +5,7 @@ using System.Text;
 using ApprovalTests;
 using ApprovalTests.Combinations;
 using ApprovalTests.Reporters;
-using GildedRoseKata;
+using GildedRose;
 
 namespace GildedRoseTests
 {

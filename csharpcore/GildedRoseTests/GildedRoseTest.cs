@@ -1,6 +1,6 @@
 ﻿using Xunit;
 using System.Collections.Generic;
-using GildedRoseKata;
+using GildedRose;
 
 namespace GildedRoseTests
 {
@@ -28,7 +28,7 @@ namespace GildedRoseTests
                     Quality = quality,
                 }
             };
-            GildedRose app = new GildedRose(Items);
+            var app = new GildedRose.GildedRose(Items);
             app.UpdateQuality();
             Assert.Equal(expectedQuality, Items[0].Quality);
             Assert.Equal(expectedSellIn, Items[0].SellIn);
@@ -61,6 +61,7 @@ namespace GildedRoseTests
         [InlineData(1, 2, 0, 0)]
         [InlineData(2, 3, 1, 1)]
         [InlineData(0, 0, -1, 0)]
+        [InlineData(0, 2, -1, 0)]
         public void ConjuredUpdateTheory(int sellIn, int quality, int expectedSellIn, int expectedQuality)
         {
             TestItemUpdate("Conjured Mana Cake", sellIn, quality, expectedSellIn, expectedQuality);
