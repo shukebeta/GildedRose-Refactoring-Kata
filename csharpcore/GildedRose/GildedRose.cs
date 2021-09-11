@@ -38,32 +38,39 @@ namespace GildedRoseKata
                 case "Backstage passes to a TAFKAL80ETC concert":
                 {
                     DecreaseSellIn(item);
-                    if (FurtherFromExpiration(item))
-                    {
-                        IncreaseQualityIfPossible(item);
-                    }
-                    else
-                    {
-                        IncreaseQualityIfPossible(item);
-                        IncreaseQualityIfPossible(item);
-                        if (CloseToExpiration(item))
-                        {
-                            IncreaseQualityIfPossible(item);
-                        }
-                    }
-
                     if (IsExpired(item))
                     {
                         SetItemQualityZero(item);
                     }
-
+                    else
+                    {
+                        if (FurtherFromExpiration(item))
+                        {
+                            IncreaseQualityIfPossible(item);
+                        }
+                        else
+                        {
+                            IncreaseQualityIfPossible(item);
+                            IncreaseQualityIfPossible(item);
+                            if (CloseToExpiration(item))
+                            {
+                                IncreaseQualityIfPossible(item);
+                            }
+                        }
+                    }
                     break;
                 }
                 case "Sulfuras, Hand of Ragnaros":
                     break;
                 case "Conjured Mana Cake":
                     DecreaseSellIn(item);
-                    DecreaseDoubleQualityIfPossible(item);
+                    DecreaseQualityIfPossible(item);
+                    DecreaseQualityIfPossible(item);
+                    if (IsExpired(item))
+                    {
+                       DecreaseQualityIfPossible(item);
+                       DecreaseQualityIfPossible(item);
+                    }
                     break;
                 default:
                 {
