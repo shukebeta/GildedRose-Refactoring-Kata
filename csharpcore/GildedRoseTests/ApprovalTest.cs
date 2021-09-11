@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Text;
 using ApprovalTests;
+using ApprovalTests.Combinations;
 using ApprovalTests.Reporters;
 using GildedRoseKata;
 
@@ -19,8 +20,13 @@ namespace GildedRoseTests
 
             Program.Main(new string[] { });
             var output = fakeoutput.ToString();
-
             Approvals.Verify(output);
+        }
+
+        private string DoUpdate(string name, int sellIn, int quality)
+        {
+            // do the update here
+            return string.Empty;
         }
     }
 }

@@ -22,114 +22,124 @@ namespace GildedRoseKata
 
         private static void DoUpdateQuality(Item item)
         {
-            if (item.Name == "Aged Brie")
+            switch (item.Name)
             {
+                case "Aged Brie":
                 {
-                    if (item.Quality < 50)
+                    DecreaseSellIn(item);
+                    IncreaseQualityIfPossible(item);
+                    if (IsExpired(item))
                     {
-                        item.Quality = item.Quality + 1;
+                        IncreaseQualityIfPossible(item);
                     }
+
+                    break;
                 }
-
-                item.SellIn = item.SellIn - 1;
-
-                if (item.SellIn < 0)
+                case "Backstage passes to a TAFKAL80ETC concert":
                 {
-                    if (item.Quality < 50)
+                    DecreaseSellIn(item);
+                    if (FurtherFromExpiration(item))
                     {
-                        item.Quality = item.Quality + 1;
-                    }
-                }
-            }
-            else
-            {
-                if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
-                {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality = item.Quality + 1;
-
-                        if (item.SellIn < 11)
-                        {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality = item.Quality + 1;
-                            }
-                        }
-
-                        if (item.SellIn < 6)
-                        {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality = item.Quality + 1;
-                            }
-                        }
-                    }
-
-
-                    item.SellIn = item.SellIn - 1;
-
-                    if (item.SellIn < 0)
-                    {
-                        {
-                            item.Quality = item.Quality - item.Quality;
-                        }
-                    }
-                }
-                else
-                {
-                    if (item.Name == "Sulfuras, Hand of Ragnaros")
-                    {
+                        IncreaseQualityIfPossible(item);
                     }
                     else
                     {
-                        bar(item);
+                        IncreaseQualityIfPossible(item);
+                        IncreaseQualityIfPossible(item);
+                        if (CloseToExpiration(item))
+                        {
+                            IncreaseQualityIfPossible(item);
+                        }
                     }
+
+                    if (IsExpired(item))
+                    {
+                        SetItemQualityZero(item);
+                    }
+
+                    break;
+                }
+                case "Sulfuras, Hand of Ragnaros":
+                    break;
+                case "Conjured Mana Cake":
+                    DecreaseSellIn(item);
+                    DecreaseDoubleQualityIfPossible(item);
+                    break;
+                default:
+                {
+                    DecreaseSellIn(item);
+                    StandardDecreaseQuality(item);
+                    break;
                 }
             }
         }
 
-        private static void bar(Item item)
+        private static bool FurtherFromExpiration(Item item)
+        {
+            return !FarFromExpiration(item);
+        }
+
+        private static bool FarFromExpiration(Item item)
+        {
+            return item.SellIn < Constants.FarFromExpiration;
+        }
+
+        private static bool CloseToExpiration(Item item)
+        {
+            return item.SellIn < Constants.CloseToExpiration;
+        }
+
+        private static void StandardDecreaseQuality(Item item)
+        {
+            if (NotExpired(item))
+            {
+                DecreaseQualityIfPossible(item);
+            }
+            else
+            {
+                DecreaseDoubleQualityIfPossible(item);
+            }
+        }
+
+        private static bool NotExpired(Item item)
+        {
+            return item.SellIn >= 0;
+        }
+
+        private static bool IsExpired(Item item)
+        {
+            return !NotExpired(item);
+        }
+
+        private static void SetItemQualityZero(Item item)
+        {
+            item.Quality = 0;
+        }
+
+        private static void DecreaseDoubleQualityIfPossible(Item item)
+        {
+            DecreaseQualityIfPossible(item);
+            DecreaseQualityIfPossible(item);
+        }
+
+        private static void DecreaseSellIn(Item item)
+        {
+            item.SellIn -= 1;
+        }
+
+        private static void DecreaseQualityIfPossible(Item item)
         {
             if (item.Quality > 0)
             {
-                if (item.Name != "Sulfuras, Hand of Ragnaros")
-                {
-                    item.Quality = item.Quality - 1;
-                }
+                item.Quality -= 1;
             }
+        }
 
-            if (item.Name != "Sulfuras, Hand of Ragnaros")
+        private static void IncreaseQualityIfPossible(Item item)
+        {
+            if (item.Quality < Constants.QualityMax)
             {
-                item.SellIn = item.SellIn - 1;
-            }
-
-            if (item.SellIn < 0)
-            {
-                if (item.Name != "Aged Brie")
-                {
-                    if (item.Name != "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (item.Quality > 0)
-                        {
-                            if (item.Name != "Sulfuras, Hand of Ragnaros")
-                            {
-                                item.Quality = item.Quality - 1;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        item.Quality = item.Quality - item.Quality;
-                    }
-                }
-                else
-                {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality = item.Quality + 1;
-                    }
-                }
+                item.Quality += 1;
             }
         }
     }

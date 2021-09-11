@@ -33,7 +33,7 @@ namespace GildedRoseKata
                     SellIn = 5,
                     Quality = 49
                 },
-				// this conjured item does not work properly yet
+				// this conjured item does not work properly before, but now it works!
 				new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
             };
 
