@@ -22,23 +22,22 @@ namespace GildedRose.IntelligentItem
 
         private void DecreaseQuality()
         {
-            if (NotExpired())
+            DecreaseQualityTwiceIfPossible();
+            if (Expired())
             {
-                DecreaseQualityIfPossible();
-                DecreaseQualityIfPossible();
-            }
-            else
-            {
-                DecreaseQualityIfPossible();
-                DecreaseQualityIfPossible();
-                DecreaseQualityIfPossible();
-                DecreaseQualityIfPossible();
+                DecreaseQualityTwiceIfPossible();
             }
         }
 
-        private bool NotExpired()
+        private void DecreaseQualityTwiceIfPossible()
         {
-            return _item.SellIn >= 0;
+            DecreaseQualityIfPossible();
+            DecreaseQualityIfPossible();
+        }
+
+        private bool Expired()
+        {
+            return _item.SellIn < 0;
         }
 
         private void DecreaseQualityIfPossible()
