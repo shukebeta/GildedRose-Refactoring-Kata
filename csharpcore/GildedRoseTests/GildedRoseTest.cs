@@ -19,7 +19,7 @@ namespace GildedRoseTests
 
         private void TestItemUpdate(string itemName, int sellIn, int quality, int expectedSellIn, int expectedQuality)
         {
-            IList<Item> Items = new List<Item>
+            IList<Item> items = new List<Item>
             {
                 new Item
                 {
@@ -28,10 +28,10 @@ namespace GildedRoseTests
                     Quality = quality,
                 }
             };
-            var app = new GildedRose.GildedRose(Items);
+            var app = new GildedRose.GildedRose(items);
             app.UpdateQuality();
-            Assert.Equal(expectedQuality, Items[0].Quality);
-            Assert.Equal(expectedSellIn, Items[0].SellIn);
+            Assert.Equal(expectedQuality, items[0].Quality);
+            Assert.Equal(expectedSellIn, items[0].SellIn);
         }
 
         [Theory]
